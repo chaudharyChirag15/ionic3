@@ -1,14 +1,31 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      User Profile
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-</ion-content>
+<ion-content>
+  <ion-list class="accordion-list">
+    <!-- First Level -->
+    <ion-list-header *ngFor="let item of information; let i = index" no-lines no-padding>
+      <!-- Toggle Button -->
+      <button ion-item (click)="toggleSection(i)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}">
+        <ion-icon item-left name="arrow-forward" *ngIf="!item.open"></ion-icon>
+        <ion-icon item-left name="arrow-down" *ngIf="item.open"></ion-icon>
+        <ion-img style="width: 80px; height: 80px;" src="{{item.picture.thumbnail}}"></ion-img>
+        <h3>{{ item.name.first }} {{ item.name.last }}</h3>
+      </button>
+
+      <ion-list *ngIf="item && item.open" no-lines>
+        <ion-item *ngIf="item" ion-item detail-none class="child-item" text-wrap>
+          <p>Contact No: {{ item.phone }}</p>
+          <p>Email Id: {{ item.email }}</p>
+          <p>City: {{ item.location.city }}</p>
+        </ion-item>
+
+      </ion-list>
+
+    </ion-list-header>
+  </ion-list>
